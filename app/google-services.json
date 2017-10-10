@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1072930347385",
+    "project_id": "firebase-smallmoney"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072930347385:android:e5493a9666dc273e",
+        "android_client_info": {
+          "package_name": "com.example.smallmomey.smallmoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072930347385-9t77u30moi09rnpo5mbs9to145h1l3r9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smallmomey.smallmoney",
+            "certificate_hash": "aa2a090189a094d8ccd83229017d57eb1af3b91b"
+          }
+        },
+        {
+          "client_id": "1072930347385-7bglu3benakr7oaev119tchse3a6ar4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtQo1BXz629IzFeTAdcHgIy8lzD1sS34Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
