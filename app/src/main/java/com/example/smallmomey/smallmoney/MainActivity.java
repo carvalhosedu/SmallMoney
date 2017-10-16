@@ -40,6 +40,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+
+            if (bundle != null) {
+                if (bundle.containsKey("tipo")) {
+                    Integer tipo = bundle.getInt("tipo");
+
+                    if (tipo == 999) {
+                        signOut();
+                    }
+                }
+        }
         setContentView(R.layout.activity_main);
         SignIng = (SignInButton) findViewById(R.id.bn_login);
         SignIng.setOnClickListener(this);
@@ -81,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i.putExtras(bundle);
 
         startActivity(i);
+        finish();
     }
 
     @Override
@@ -102,6 +115,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent,REQ_CODE);
     }
 
+    private void signOut(){
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.clear();
+        ed.commit();
+
+//        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+//            @Override
+//            public void onResult(@NonNull Status status) {
+//                return;
+//            }
+//        });
+    }
+
     private void handleResult(GoogleSignInResult result){
         if (result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
@@ -112,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else{
             return;
-//            updateUI(false); SE NÂO LOGAR
         }
     }
 

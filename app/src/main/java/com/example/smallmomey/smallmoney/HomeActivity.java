@@ -57,51 +57,15 @@ public class HomeActivity extends AppCompatActivity {
             setupNavigationDrawerContent(navigationView);
           
         }
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String user = sp.getString("user", null);
-
-        Intent intent = getIntent();
-
-        Bundle bundle = intent.getExtras();
-        String usuario = bundle.getString("user");
-        String email = bundle.getString("email");
-        Integer tipo = bundle.getInt("tipo");
-
-
-//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View layoutHeader = inflater.inflate(R.layout.navigation_drawer_header, null);
-//        TextView txtUsuario = (TextView) layoutHeader.findViewById(R.id.usuarioTxt);
-//        TextView txtEmail = (TextView) layoutHeader.findViewById(R.id.emailTxt);
-//
-//        if(tipo == 1 ){
-//            txtUsuario.setText(usuario);
-//            txtEmail.setText(email);
-//        }
-//
-//        if(tipo == 0){
-//            txtUsuario.setText("asdasd");
-//            txtEmail.setText("email@email.com");
-//        }
-
-       // HeaderAdapter adapter = new HeaderAdapter(this, R.layout.navigation_drawer_header);
-
     }
 
-    public void logout (View v) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor ed = sp.edit();
-        ed.clear();
-        ed.commit();
-
-        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(@NonNull Status status) {
-
-            }
-        });
-
+    public void logout () {
         Intent i = new Intent(this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        Integer tipo = 999 ;
+        bundle.putInt("tipo", tipo);
+        i.putExtras(bundle);
+
         startActivity(i);
         finish();
     }
@@ -125,16 +89,32 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupNavigationDrawerContent(NavigationView navigationView) {
-    //    View headerView = LayoutInflater.from(this).inflate(R.layout.navigation_drawer_header, navigationView,false);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewGroup parent = (ViewGroup) navigationView.getParent().getParent();
         View layoutHeader = inflater.inflate(R.layout.navigation_drawer_header, parent, false);
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String user = sp.getString("user", null);
+
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getExtras();
+        String usuario = bundle.getString("user");
+        String email = bundle.getString("email");
+        Integer tipo = bundle.getInt("tipo");
+
         TextView txtUsuario = (TextView) layoutHeader.findViewById(R.id.usuarioTxt);
         TextView txtEmail = (TextView) layoutHeader.findViewById(R.id.emailTxt);
-        txtUsuario.setText("usuario");
-        txtEmail.setText("email");
 
+        if(tipo == 1 ){
+            txtUsuario.setText(usuario);
+            txtEmail.setText(email);
+        }
+
+        if(tipo == 0){
+            txtUsuario.setText(usuario);
+            txtEmail.setText("");
+        }
 
        // navigationView.inflateHeaderView(R.layout.navigation_drawer_header);
         navigationView.addHeaderView(layoutHeader);
@@ -173,9 +153,14 @@ public class HomeActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 return true;
                             case R.id.item_navigation_drawer_help_and_feedback:
-                                menuItem.setChecked(true);
-                                Toast.makeText(HomeActivity.this, menuItem.getTitle().toString(), Toast.LENGTH_SHORT).show();
-                                drawerLayout.closeDrawer(GravityCompat.START);
+                               ///// logout();
+                                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                return;
+            }
+        });
+
                                 return true;
                         }
                         return true;
